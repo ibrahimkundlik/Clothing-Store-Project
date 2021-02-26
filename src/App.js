@@ -1,8 +1,13 @@
 import React from "react";
-import "./App.css";
+import HomePage from "./pages/homepage/HomePage.component";
+import "./App.scss";
 
 function App() {
-	return <div>Clothing Store React</div>;
+	return (
+		<div>
+			<HomePage />
+		</div>
+	);
 }
 
 export default App;
