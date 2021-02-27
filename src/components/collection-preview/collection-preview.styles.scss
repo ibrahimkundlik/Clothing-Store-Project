@@ -1,0 +1,10 @@
+.collection-preview {
+	h2 {
+		margin: 1rem 0;
+	}
+	.products {
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: space-between;
+	}
+}
