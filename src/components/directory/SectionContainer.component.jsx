@@ -46,8 +46,8 @@ class SectionContainer extends React.Component {
 	render() {
 		return (
 			<div className="section-container">
-				{this.state.sections.map(({ title, imageUrl, id }) => (
-					<MenuItem key={id} title={title} imageUrl={imageUrl} />
+				{this.state.sections.map(({ id, ...otherProps }) => (
+					<MenuItem key={id} {...otherProps} />
 				))}
 			</div>
 		);
