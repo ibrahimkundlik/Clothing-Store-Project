@@ -1,0 +1,14 @@
+.signIn-cont {
+	h2 {
+		margin: 0.8rem 0;
+	}
+	p {
+		margin-bottom: 0.8rem;
+	}
+	form {
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: space-between;
+		align-items: center;
+	}
+}

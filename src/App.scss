@@ -12,3 +12,19 @@ h6 {
 p {
 	font-weight: 300;
 }
+.main-container {
+	max-width: 1400px;
+	margin: 0 auto;
+}
+
+@media screen and (min-width: 768px) {
+	body {
+		padding: 0rem 2rem 3rem 2rem;
+	}
+}
+
+@media screen and (min-width: 992px) {
+	body {
+		padding: 0rem 2.5rem 3rem 2.5rem;
+	}
+}

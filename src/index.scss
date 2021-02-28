@@ -16,15 +16,26 @@ a {
 	color: black;
 	display: block;
 }
+input,
+button {
+	font-family: "Josefin Sans", sans-serif;
+	font-size: 16px;
+	outline: none;
+	border: none;
+}
 
 @media screen and (min-width: 768px) {
-	html {
+	html,
+	input,
+	button {
 		font-size: 19px;
 	}
 }
 
 @media screen and (min-width: 992px) {
-	html {
+	html,
+	input,
+	button {
 		font-size: 22px;
 	}
 }

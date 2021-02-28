@@ -13,7 +13,7 @@ const Header = () => {
 			</div>
 			<nav className="nav-links">
 				<Link to="/shop">SHOP</Link>
-				<Link to="/shop">CONTACT</Link>
+				<Link to="/login">LOGIN</Link>
 			</nav>
 		</header>
 	);
