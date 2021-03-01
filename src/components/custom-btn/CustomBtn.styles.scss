@@ -1,14 +1,20 @@
 .custom-btn {
-	padding: 0.5rem;
-	color: white;
+	padding: 0.7rem 0.5rem 0.5rem 0.5rem;
+	color: #d3feff;
 	background-color: black;
 	cursor: pointer;
 	transition: all 0.5s;
-	font-weight: 300;
+	font-weight: 400;
 	margin: 1rem 0;
 
 	&:hover {
-		background-color: #e9e9e9;
+		background-color: #d3feff;
 		color: black;
+		outline: 1px solid black;
 	}
+}
+
+.googleAuth {
+	color: black;
+	background-color: #4285f4;
 }

@@ -40,7 +40,7 @@ class Register extends React.Component {
 						id="confirm-password"
 						required
 					/>
-					<CustomBtn text="SIGN UP" />
+					<CustomBtn type="submit"> SIGN UP </CustomBtn>
 				</form>
 			</div>
 		);
