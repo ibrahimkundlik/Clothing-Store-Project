@@ -24,6 +24,10 @@
 		top: 20%;
 		left: 0%;
 		animation: labelMove 0.5s 1 forwards paused;
+
+		&:hover {
+			cursor: text;
+		}
 	}
 }
 

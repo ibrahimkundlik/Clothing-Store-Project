@@ -1,11 +1,11 @@
 import React from "react";
 import "./FormInput.styles.scss";
 
-const FormInput = ({ id, name, ...otherProps }) => {
+const FormInput = ({ id, label, ...otherProps }) => {
 	return (
 		<div className="input-cont">
 			<input id={id} {...otherProps} />
-			<label htmlFor={id}>{name}</label>
+			<label htmlFor={id}>{label}</label>
 		</div>
 	);
 };
