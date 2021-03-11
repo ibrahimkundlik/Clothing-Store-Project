@@ -22,6 +22,10 @@ export const createUserProfile = async (userAuth, additionalData) => {
 	// CRUD on userAuth, userRef
 	if (!snapShot.exist) {
 		const { displayName, email, photoURL } = userAuth;
+		// console.log(1, displayName);
+		// console.log(2, email);
+		// console.log(3, photoURL);
+		console.log(snapShot);
 		const createdAt = new Date();
 		try {
 			await userRef.set({

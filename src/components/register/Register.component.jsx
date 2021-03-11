@@ -1,8 +1,11 @@
+//react
 import React from "react";
-import "./Register.styles.scss";
+//firebase
+import { auth, createUserProfile } from "../../firebase/firebase.utils";
+//components
 import FormInput from "../form-input/FormInput.component";
 import CustomBtn from "../custom-btn/CustomBtn.component";
-import { auth, createUserProfile } from "../../firebase/firebase.utils";
+import "./Register.styles.scss";
 
 class Register extends React.Component {
 	constructor() {
@@ -21,7 +24,7 @@ class Register extends React.Component {
 
 		const { displayName, email, password, confirmPassword } = this.state;
 
-		if (password != confirmPassword) {
+		if (password !== confirmPassword) {
 			alert("Passwords don't match");
 			return;
 		}

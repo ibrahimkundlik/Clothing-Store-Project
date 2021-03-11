@@ -1,10 +1,16 @@
+//react
 import React from "react";
 import { ReactComponent as Logo } from "../../assets/crown.svg";
+//react-router
 import { Link } from "react-router-dom";
-import "./Header.styles.scss";
+//redux
+import { connect } from "react-redux";
+//firebase
 import { auth } from "../../firebase/firebase.utils";
+//css
+import "./Header.styles.scss";
 
-const Header = ({ currentUser, isLoading }) => {
+const Header = ({ currentUser }) => {
 	return (
 		<header className="header">
 			<div className="logo-cont">
@@ -20,7 +26,7 @@ const Header = ({ currentUser, isLoading }) => {
 					<button className="nav-link" onClick={() => auth.signOut()}>
 						SIGN OUT
 					</button>
-				) : isLoading ? null : (
+				) : (
 					<Link to="/login" className="nav-link">
 						LOGIN
 					</Link>
@@ -30,4 +36,9 @@ const Header = ({ currentUser, isLoading }) => {
 	);
 };
 
-export default Header;
+//access redux state from below fn
+const mapStateToProps = (state) => ({
+	currentUser: state.user.currentUser,
+});
+
+export default connect(mapStateToProps)(Header);
