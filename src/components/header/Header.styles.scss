@@ -4,6 +4,7 @@
 	justify-content: space-between;
 	align-items: center;
 	padding: 2rem 0.5rem;
+	position: relative;
 
 	.logo-cont {
 		max-width: 55px;
@@ -14,6 +15,7 @@
 		display: flex;
 		flex-flow: row nowrap;
 		justify-content: flex-end;
+		align-items: flex-end;
 
 		.nav-link {
 			margin-left: 2rem;
