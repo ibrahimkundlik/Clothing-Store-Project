@@ -12,6 +12,8 @@ const config = {
 	measurementId: "G-VZG50TEWPC",
 };
 
+firebase.initializeApp(config);
+
 export const createUserProfile = async (userAuth, additionalData) => {
 	if (!userAuth) return;
 
@@ -20,12 +22,8 @@ export const createUserProfile = async (userAuth, additionalData) => {
 	const snapShot = await userRef.get();
 
 	// CRUD on userAuth, userRef
-	if (!snapShot.exist) {
+	if (!snapShot.exists) {
 		const { displayName, email, photoURL } = userAuth;
-		// console.log(1, displayName);
-		// console.log(2, email);
-		// console.log(3, photoURL);
-		console.log(snapShot);
 		const createdAt = new Date();
 		try {
 			await userRef.set({
@@ -42,8 +40,6 @@ export const createUserProfile = async (userAuth, additionalData) => {
 
 	return userRef;
 };
-
-firebase.initializeApp(config);
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();

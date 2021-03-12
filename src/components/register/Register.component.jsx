@@ -23,6 +23,7 @@ class Register extends React.Component {
 		e.preventDefault();
 
 		const { displayName, email, password, confirmPassword } = this.state;
+		const photoURL = `https://ui-avatars.com/api/?background=random&name=${displayName}`;
 
 		if (password !== confirmPassword) {
 			alert("Passwords don't match");
@@ -34,7 +35,7 @@ class Register extends React.Component {
 				email,
 				password
 			);
-			await createUserProfile(user, { displayName });
+			await createUserProfile(user, { displayName, photoURL });
 			this.setState({
 				displayName: "",
 				email: "",
