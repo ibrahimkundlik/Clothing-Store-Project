@@ -1,0 +1,25 @@
+.checkout-item {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	margin: 1rem 0;
+
+	.item-img {
+		flex-basis: 20%;
+	}
+
+	p:nth-child(2) {
+		flex-basis: 30%;
+		padding-left: 5%;
+	}
+	p:nth-child(3) {
+		flex-basis: 23%;
+		text-align: center;
+	}
+	p:nth-child(4),
+	p:nth-child(5) {
+		flex-basis: 18%;
+		text-align: center;
+	}
+}
