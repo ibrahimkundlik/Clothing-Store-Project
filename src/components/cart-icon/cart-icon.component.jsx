@@ -5,11 +5,11 @@ import "./cart-icon.styles.scss";
 import { connect } from "react-redux";
 import { setCartToggle } from "../../redux/cart/cart.action";
 
-const CartIcon = ({ setCartToggle }) => {
+const CartIcon = ({ setCartToggle, itemCount }) => {
 	return (
 		<div className="nav-link cart-icon" onClick={setCartToggle}>
 			<ShopIcon />
-			<p className="cart-count">0</p>
+			<p className="cart-count">{itemCount}</p>
 		</div>
 	);
 };
@@ -18,4 +18,8 @@ const mapDispatchToProps = (dispatch) => ({
 	setCartToggle: () => dispatch(setCartToggle()),
 });
 
-export default connect(null, mapDispatchToProps)(CartIcon);
+const mapStateToProps = ({ cart }) => ({
+	itemCount: cart.cartItems.reduce((count, item) => count + item.quantity, 0),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartIcon);
