@@ -4,6 +4,7 @@ import "./cart-icon.styles.scss";
 //redux
 import { connect } from "react-redux";
 import { setCartToggle } from "../../redux/cart/cart.action";
+import { selectCartCount } from "../../redux/cart/cart.selector";
 
 const CartIcon = ({ setCartToggle, itemCount }) => {
 	return (
@@ -18,8 +19,8 @@ const mapDispatchToProps = (dispatch) => ({
 	setCartToggle: () => dispatch(setCartToggle()),
 });
 
-const mapStateToProps = ({ cart }) => ({
-	itemCount: cart.cartItems.reduce((count, item) => count + item.quantity, 0),
+const mapStateToProps = (state) => ({
+	itemCount: selectCartCount(state),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartIcon);
