@@ -8,9 +8,10 @@ import { withRouter } from "react-router-dom";
 //redux
 import { connect } from "react-redux";
 import { selectCartItems } from "../../redux/cart/cart.selector";
+import { setCartToggle } from "../../redux/cart/cart.action";
 import { createStructuredSelector } from "reselect";
 
-const CartDropdown = ({ cartItems, history }) => {
+const CartDropdown = ({ cartItems, history, dispatch }) => {
 	return (
 		<div className="cart-dropdown">
 			<div className="cart-items">
@@ -20,7 +21,14 @@ const CartDropdown = ({ cartItems, history }) => {
 					cartItems.map((item) => <CartItem key={item.id} item={item} />)
 				)}
 			</div>
-			<CustomBtn onClick={() => history.push("/checkout")}>CHECKOUT</CustomBtn>
+			<CustomBtn
+				onClick={() => {
+					dispatch(setCartToggle());
+					history.push("/checkout");
+				}}
+			>
+				CHECKOUT
+			</CustomBtn>
 		</div>
 	);
 };
