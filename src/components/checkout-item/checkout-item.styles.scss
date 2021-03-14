@@ -1,9 +1,12 @@
 .checkout-item {
 	display: flex;
-	flex-flow: row nowrap;
+	flex-flow: row wrap;
 	justify-content: space-between;
-	align-items: center;
-	margin: 1rem 0;
+	align-items: flex-start;
+	padding: 1rem 0;
+	border-bottom: 2px solid #c5c5ff;
+	position: relative;
+	text-align: center;
 
 	.item-img {
 		flex-basis: 20%;
@@ -15,11 +18,64 @@
 	}
 	p:nth-child(3) {
 		flex-basis: 23%;
-		text-align: center;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		transform: translateY(-20%);
+
+		button {
+			background: none;
+			color: black;
+			padding: 0 0.5rem;
+			margin: 0;
+			font-size: 2rem;
+
+			&:hover {
+				outline: none;
+			}
+		}
 	}
-	p:nth-child(4),
-	p:nth-child(5) {
+	p:nth-child(4) {
 		flex-basis: 18%;
 		text-align: center;
+	}
+	p:nth-child(5) {
+		flex-basis: 0%;
+		text-align: center;
+		position: absolute;
+		bottom: 10%;
+		right: 0%;
+
+		button {
+			background: none;
+			padding: 0.2rem;
+			margin: 0;
+			font-size: 1.3rem;
+		}
+	}
+
+	&:last-child {
+		border: none;
+	}
+}
+
+@media screen and (min-width: 768px) {
+	.checkout-item {
+		flex-flow: row nowrap;
+		align-items: center;
+		text-align: left;
+
+		p:nth-child(3) {
+			transform: translateY(0);
+		}
+
+		p:nth-child(5) {
+			flex-basis: 18%;
+			position: initial;
+
+			span {
+				display: none;
+			}
+		}
 	}
 }
