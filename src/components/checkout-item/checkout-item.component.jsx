@@ -4,9 +4,18 @@ import "./checkout-item.styles.scss";
 import CustomBtn from "../custom-btn/CustomBtn.component";
 //redux
 import { connect } from "react-redux";
-import { removeItemFromCart } from "../../redux/cart/cart.action";
+import {
+	addItemsToCart,
+	removeItemsFromCart,
+	deleteItemFromCart,
+} from "../../redux/cart/cart.action";
 
-const CheckoutItem = ({ item, removeItemFromCart }) => {
+const CheckoutItem = ({
+	item,
+	addItemsToCart,
+	removeItemsFromCart,
+	deleteItemFromCart,
+}) => {
 	const { imageUrl, name, price, quantity } = item;
 	return (
 		<div className="checkout-item">
@@ -15,21 +24,23 @@ const CheckoutItem = ({ item, removeItemFromCart }) => {
 			</div>
 			<p>{name}</p>
 			<p>
-				<CustomBtn>&lt;</CustomBtn>
+				<CustomBtn onClick={() => removeItemsFromCart(item)}>&lt;</CustomBtn>
 				{quantity}
-				<CustomBtn>&gt;</CustomBtn>
+				<CustomBtn onClick={() => addItemsToCart(item)}>&gt;</CustomBtn>
 			</p>
 			<p>${price}</p>
 			<p>
 				<span>Remove </span>
-				<CustomBtn onClick={() => removeItemFromCart(item)}>❌</CustomBtn>
+				<CustomBtn onClick={() => deleteItemFromCart(item)}>❌</CustomBtn>
 			</p>
 		</div>
 	);
 };
 
 const mapDispatchToProps = (dispatch) => ({
-	removeItemFromCart: (item) => dispatch(removeItemFromCart(item)),
+	addItemsToCart: (item) => dispatch(addItemsToCart(item)),
+	removeItemsFromCart: (item) => dispatch(removeItemsFromCart(item)),
+	deleteItemFromCart: (item) => dispatch(deleteItemFromCart(item)),
 });
 
 export default connect(null, mapDispatchToProps)(CheckoutItem);
