@@ -1,57 +1,24 @@
+//react
 import React from "react";
 import MenuItem from "./MenuItem.component";
 import "./directory.styles.scss";
+//redux
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectDirectorySection } from "../../redux/directory/directory.selector";
 
-class SectionContainer extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			sections: [
-				{
-					title: "hats",
-					imageUrl: "https://i.ibb.co/cvpntL1/hats.png",
-					id: 1,
-					linkUrl: "shop/hats",
-				},
-				{
-					title: "jackets",
-					imageUrl: "https://i.ibb.co/px2tCc3/jackets.png",
-					id: 2,
-					linkUrl: "shop/jackets",
-				},
-				{
-					title: "sneakers",
-					imageUrl: "https://i.ibb.co/0jqHpnp/sneakers.png",
-					id: 3,
-					linkUrl: "shop/sneakers",
-				},
-				{
-					title: "womens",
-					imageUrl: "https://i.ibb.co/GCCdy8t/womens.png",
-					size: "large",
-					id: 4,
-					linkUrl: "shop/womens",
-				},
-				{
-					title: "mens",
-					imageUrl: "https://i.ibb.co/R70vBrQ/men.png",
-					size: "large",
-					id: 5,
-					linkUrl: "shop/mens",
-				},
-			],
-		};
-	}
+const SectionContainer = ({ sections }) => {
+	return (
+		<div className="section-container">
+			{sections.map(({ id, ...otherProps }) => (
+				<MenuItem key={id} {...otherProps} />
+			))}
+		</div>
+	);
+};
 
-	render() {
-		return (
-			<div className="section-container">
-				{this.state.sections.map(({ id, ...otherProps }) => (
-					<MenuItem key={id} {...otherProps} />
-				))}
-			</div>
-		);
-	}
-}
+const mapStateToProps = createStructuredSelector({
+	sections: selectDirectorySection,
+});
 
-export default SectionContainer;
+export default connect(mapStateToProps)(SectionContainer);

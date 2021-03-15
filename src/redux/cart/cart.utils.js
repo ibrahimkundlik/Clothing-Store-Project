@@ -1,5 +1,5 @@
 export const storeItem = (currentItems, itemToAdd) => {
-	if (itemToAdd.quantity) {
+	if (currentItems.find((item) => item.id === itemToAdd.id)) {
 		return currentItems.map((item) =>
 			itemToAdd.id === item.id ? { ...item, quantity: item.quantity + 1 } : item
 		);
