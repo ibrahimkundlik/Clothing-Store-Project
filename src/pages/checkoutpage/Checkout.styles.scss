@@ -48,6 +48,27 @@
 			font-weight: 300;
 		}
 	}
+
+	.stripe-mssg {
+		width: 100%;
+		padding: 1rem 0;
+		text-align: right;
+		color: red;
+
+		p {
+			font-weight: 400;
+			padding: 0.4rem 0;
+		}
+
+		span {
+			color: green;
+		}
+
+		button {
+			margin-top: 1rem;
+			width: 50%;
+		}
+	}
 }
 
 @media screen and (min-width: 768px) {
