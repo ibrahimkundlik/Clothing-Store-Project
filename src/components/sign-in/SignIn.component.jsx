@@ -14,6 +14,7 @@ class SignIn extends React.Component {
 		this.state = {
 			email: "",
 			password: "",
+			error: false,
 		};
 	}
 
@@ -25,12 +26,11 @@ class SignIn extends React.Component {
 			this.setState({
 				email: "",
 				password: "",
+				error: false,
 			});
 		} catch (error) {
-			console.log("Error logging in", error);
 			this.setState({
-				email: "",
-				password: "",
+				error: true,
 			});
 		}
 	};
@@ -45,7 +45,12 @@ class SignIn extends React.Component {
 			<div className="signIn-cont">
 				<h2>I already have an account</h2>
 				<p>Sign in with your email and password</p>
-				<form onSubmit={this.handleSubmit}>
+				{this.state.error ? (
+					<p className="signin-error">
+						We couldn't sign you in. Email or password is incorrect. ⚠️
+					</p>
+				) : null}
+				<form onSubmit={this.handleSubmit} autoComplete="off">
 					<FormInput
 						type="email"
 						name="email"

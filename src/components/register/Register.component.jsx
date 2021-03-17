@@ -16,6 +16,7 @@ class Register extends React.Component {
 			email: "",
 			password: "",
 			confirmPassword: "",
+			error: false,
 		};
 	}
 
@@ -41,9 +42,12 @@ class Register extends React.Component {
 				email: "",
 				password: "",
 				confirmPassword: "",
+				error: false,
 			});
 		} catch (error) {
-			console.log("Error while creating new user", error.message);
+			this.setState({
+				error: true,
+			});
 		}
 	};
 
@@ -57,7 +61,12 @@ class Register extends React.Component {
 			<div className="register-cont">
 				<h2>I do not have an account</h2>
 				<p>Sign up with your email and password</p>
-				<form onSubmit={this.handleSubmit}>
+				{this.state.error ? (
+					<p className="register-error">
+						The email address is already in use by another account. ⚠️
+					</p>
+				) : null}
+				<form onSubmit={this.handleSubmit} autoComplete="off">
 					<FormInput
 						type="text"
 						name="displayName"

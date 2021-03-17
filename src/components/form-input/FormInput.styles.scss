@@ -16,6 +16,10 @@
 				animation: labelMove 0.5s 1 forwards running;
 			}
 		}
+
+		&:invalid {
+			box-shadow: none;
+		}
 	}
 
 	label {
