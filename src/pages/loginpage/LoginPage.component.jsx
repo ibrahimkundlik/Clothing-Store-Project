@@ -1,14 +1,15 @@
 import React from "react";
 import SignIn from "../../components/sign-in/SignIn.component";
 import Register from "../../components/register/Register.component";
-import "./LoginPage.styles.scss";
+//styled-components
+import { LoginPageContainer } from "./LoginPage.styles";
 
 const LoginPage = () => {
 	return (
-		<div className="loginpage">
+		<LoginPageContainer>
 			<SignIn />
 			<Register />
-		</div>
+		</LoginPageContainer>
 	);
 };
 

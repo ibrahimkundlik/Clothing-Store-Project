@@ -1,4 +1,6 @@
-.collection-page {
+import styled from "styled-components";
+
+export const CollectionPageContainer = styled.section`
 	h2 {
 		margin: 1rem 0;
 	}
@@ -7,4 +9,4 @@
 		flex-flow: row wrap;
 		justify-content: space-evenly;
 	}
-}
+`;

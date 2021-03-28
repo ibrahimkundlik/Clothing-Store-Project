@@ -19,7 +19,6 @@ import {
 	LogoContainer,
 	NavContainer,
 	NavLink,
-	NavDiv,
 } from "./Header.styles";
 
 const Header = ({ currentUser, hidden }) => {
@@ -33,13 +32,15 @@ const Header = ({ currentUser, hidden }) => {
 			<NavContainer>
 				<NavLink to="/shop">SHOP</NavLink>
 				{currentUser ? (
-					<NavDiv onClick={() => auth.signOut()}>SIGN OUT</NavDiv>
+					<NavLink as="div" onClick={() => auth.signOut()}>
+						SIGN OUT
+					</NavLink>
 				) : (
 					<NavLink to="/login">LOGIN</NavLink>
 				)}
-				<NavDiv>
+				<NavLink as="div">
 					<CartIcon />
-				</NavDiv>
+				</NavLink>
 			</NavContainer>
 			{hidden ? null : <CartDropdown />}
 		</HeaderContainer>

@@ -1,16 +1,8 @@
 import React from "react";
-import "./CustomBtn.styles.scss";
+import { CustomButton } from "./CustomBtn.styles";
 
-const CustomBtn = ({ type, children, onClick, googleAuth }) => {
-	return (
-		<button
-			className={`${googleAuth ? "googleAuth " : ""}custom-btn`}
-			type={type}
-			onClick={onClick}
-		>
-			{children}
-		</button>
-	);
+const CustomBtn = ({ children, ...props }) => {
+	return <CustomButton {...props}>{children}</CustomButton>;
 };
 
 export default CustomBtn;
