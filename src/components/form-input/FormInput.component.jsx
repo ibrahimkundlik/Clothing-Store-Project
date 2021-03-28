@@ -1,12 +1,12 @@
 import React from "react";
-import "./FormInput.styles.scss";
+import { InputContainer } from "./FormInput.styles";
 
 const FormInput = ({ id, label, ...otherProps }) => {
 	return (
-		<div className="input-cont">
+		<InputContainer>
 			<input id={id} {...otherProps} />
 			<label htmlFor={id}>{label}</label>
-		</div>
+		</InputContainer>
 	);
 };
 

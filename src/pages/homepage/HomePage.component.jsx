@@ -3,7 +3,7 @@ import SectionContainer from "../../components/directory/SectionContainer.compon
 
 const HomePage = () => {
 	return (
-		<div className="homepage container">
+		<div>
 			<SectionContainer />
 		</div>
 	);
