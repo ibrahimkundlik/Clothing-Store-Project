@@ -13,33 +13,36 @@ import { auth } from "../../firebase/firebase.utils";
 //components
 import CartIcon from "../cart-icon/cart-icon.component";
 import CartDropdown from "../cart-dropdown/cart-dropdown.component";
-import "./Header.styles.scss";
+//styled-components
+import {
+	HeaderContainer,
+	LogoContainer,
+	NavContainer,
+	NavLink,
+	NavDiv,
+} from "./Header.styles";
 
 const Header = ({ currentUser, hidden }) => {
 	return (
-		<header className="header">
-			<div className="logo-cont">
+		<HeaderContainer>
+			<LogoContainer>
 				<Link to="/">
 					<Logo />
 				</Link>
-			</div>
-			<nav className="nav-links">
-				<Link className="nav-link" to="/shop">
-					SHOP
-				</Link>
+			</LogoContainer>
+			<NavContainer>
+				<NavLink to="/shop">SHOP</NavLink>
 				{currentUser ? (
-					<div className="nav-link" onClick={() => auth.signOut()}>
-						SIGN OUT
-					</div>
+					<NavDiv onClick={() => auth.signOut()}>SIGN OUT</NavDiv>
 				) : (
-					<Link to="/login" className="nav-link">
-						LOGIN
-					</Link>
+					<NavLink to="/login">LOGIN</NavLink>
 				)}
-				<CartIcon />
-			</nav>
+				<NavDiv>
+					<CartIcon />
+				</NavDiv>
+			</NavContainer>
 			{hidden ? null : <CartDropdown />}
-		</header>
+		</HeaderContainer>
 	);
 };
 

@@ -15,7 +15,6 @@ import HomePage from "./pages/homepage/HomePage.component";
 import ShopPage from "./pages/shoppage/ShopPage.component";
 import LoginPage from "./pages/loginpage/LoginPage.component";
 import CheckoutPage from "./pages/checkoutpage/Checkout.component";
-import "./App.scss";
 
 class App extends React.Component {
 	unsubscribeFromAuth = null;
@@ -43,7 +42,7 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<div className="main-container">
+			<div className="app-container">
 				<Header />
 				<Switch>
 					<Route exact path="/" component={HomePage} />

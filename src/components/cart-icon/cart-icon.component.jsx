@@ -10,7 +10,7 @@ import { createStructuredSelector } from "reselect";
 
 const CartIcon = ({ setCartToggle, itemCount }) => {
 	return (
-		<div className="nav-link cart-icon" onClick={setCartToggle}>
+		<div className="cart-icon" onClick={setCartToggle}>
 			<ShopIcon />
 			<p className="cart-count">{itemCount}</p>
 		</div>
