@@ -1,7 +1,8 @@
 //react
 import React from "react";
 import { ReactComponent as ShopIcon } from "../../assets/shopping-bag.svg";
-import "./cart-icon.styles.scss";
+//styled-components
+import { CartIconContainer, CartCount } from "./cart-icon.styles";
 //redux
 import { connect } from "react-redux";
 import { setCartToggle } from "../../redux/cart/cart.action";
@@ -10,10 +11,10 @@ import { createStructuredSelector } from "reselect";
 
 const CartIcon = ({ setCartToggle, itemCount }) => {
 	return (
-		<div className="cart-icon" onClick={setCartToggle}>
+		<CartIconContainer onClick={setCartToggle}>
 			<ShopIcon />
-			<p className="cart-count">{itemCount}</p>
-		</div>
+			<CartCount>{itemCount}</CartCount>
+		</CartIconContainer>
 	);
 };
 

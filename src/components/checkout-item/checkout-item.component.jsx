@@ -1,7 +1,8 @@
 //react
 import React from "react";
-import "./checkout-item.styles.scss";
 import CustomBtn from "../custom-btn/CustomBtn.component";
+//styled-components
+import { ItemImg, CheckoutItemContainer } from "./checkout-item.styles";
 //redux
 import { connect } from "react-redux";
 import {
@@ -18,10 +19,10 @@ const CheckoutItem = ({
 }) => {
 	const { imageUrl, name, price, quantity } = item;
 	return (
-		<div className="checkout-item">
-			<div className="item-img">
+		<CheckoutItemContainer>
+			<ItemImg>
 				<img src={`${imageUrl}`} alt={name} />
-			</div>
+			</ItemImg>
 			<p>{name}</p>
 			<p>
 				<CustomBtn onClick={() => removeItemsFromCart(item)}>&lt;</CustomBtn>
@@ -33,7 +34,7 @@ const CheckoutItem = ({
 				<span>Remove </span>
 				<CustomBtn onClick={() => deleteItemFromCart(item)}>❌</CustomBtn>
 			</p>
-		</div>
+		</CheckoutItemContainer>
 	);
 };
 

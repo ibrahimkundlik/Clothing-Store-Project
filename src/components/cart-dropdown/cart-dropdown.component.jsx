@@ -2,7 +2,8 @@
 import React from "react";
 import CustomBtn from "../custom-btn/CustomBtn.component";
 import CartItem from "../cart-item/cart-item.component";
-import "./cart-dropdown.styles.scss";
+//styled-components
+import { CartDropdownContainer, CartItems } from "./cart-dropdown.styles";
 //react-router
 import { withRouter } from "react-router-dom";
 //redux
@@ -13,14 +14,14 @@ import { createStructuredSelector } from "reselect";
 
 const CartDropdown = ({ cartItems, history, dispatch }) => {
 	return (
-		<div className="cart-dropdown">
-			<div className="cart-items">
+		<CartDropdownContainer>
+			<CartItems>
 				{cartItems.length === 0 ? (
 					<p className="empty-cart">Cart is empty !</p>
 				) : (
 					cartItems.map((item) => <CartItem key={item.id} item={item} />)
 				)}
-			</div>
+			</CartItems>
 			<CustomBtn
 				onClick={() => {
 					dispatch(setCartToggle());
@@ -29,7 +30,7 @@ const CartDropdown = ({ cartItems, history, dispatch }) => {
 			>
 				CHECKOUT
 			</CustomBtn>
-		</div>
+		</CartDropdownContainer>
 	);
 };
 
