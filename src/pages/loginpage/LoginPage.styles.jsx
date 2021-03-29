@@ -19,7 +19,7 @@ export const LoginPageContainer = styled.section`
 
 	${media.desktop`
   width: 100%;
-  max-width: 1250px;
+  max-width: 1280px;
   & > * {
     width: 46%;
   }

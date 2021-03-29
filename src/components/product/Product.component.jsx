@@ -1,7 +1,14 @@
 //react
 import React from "react";
 import CustomBtn from "../custom-btn/CustomBtn.component";
-import "./Product.styles.scss";
+//styled-components
+import {
+	ProductContainer,
+	ProductImage,
+	ProductInfo,
+	ProductName,
+	ProductPrice,
+} from "./Product.styles";
 //redux
 import { connect } from "react-redux";
 import { addItemsToCart } from "../../redux/cart/cart.action";
@@ -9,19 +16,14 @@ import { addItemsToCart } from "../../redux/cart/cart.action";
 const Product = ({ item, addItemsToCart }) => {
 	const { imageUrl, name, price } = item;
 	return (
-		<div className="product-cont">
-			<div
-				className="product-img"
-				style={{
-					backgroundImage: `url("${imageUrl}")`,
-				}}
-			></div>
-			<div className="product-info">
-				<p className="product-name">{name}</p>
-				<p className="product-price">$ {price}</p>
-			</div>
+		<ProductContainer>
+			<ProductImage imageUrl={imageUrl} />
+			<ProductInfo>
+				<ProductName>{name}</ProductName>
+				<ProductPrice>$ {price}</ProductPrice>
+			</ProductInfo>
 			<CustomBtn onClick={() => addItemsToCart(item)}>add to cart</CustomBtn>
-		</div>
+		</ProductContainer>
 	);
 };
 

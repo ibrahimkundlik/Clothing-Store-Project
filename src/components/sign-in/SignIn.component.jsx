@@ -5,7 +5,8 @@ import { auth, signInWithGoogle } from "../../firebase/firebase.utils";
 //components
 import FormInput from "../form-input/FormInput.component";
 import CustomBtn from "../custom-btn/CustomBtn.component";
-import "./SignIn.styles.scss";
+//styled-components
+import { SignInContainer } from "./SignIn.styles";
 
 class SignIn extends React.Component {
 	constructor() {
@@ -42,12 +43,12 @@ class SignIn extends React.Component {
 
 	render() {
 		return (
-			<div className="signIn-cont">
+			<SignInContainer>
 				<h2>I already have an account</h2>
 				<p>Sign in with your email and password</p>
 				{this.state.error ? (
 					<p className="signin-error">
-						We couldn't sign you in. Email or password is incorrect. ⚠️
+						We couldn't sign you in. Email or Password is incorrect. ⚠️
 					</p>
 				) : null}
 				<form onSubmit={this.handleSubmit} autoComplete="off">
@@ -72,7 +73,7 @@ class SignIn extends React.Component {
 						SIGN IN WITH GOOGLE
 					</CustomBtn>
 				</form>
-			</div>
+			</SignInContainer>
 		);
 	}
 }

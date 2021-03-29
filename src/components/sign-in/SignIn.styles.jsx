@@ -1,4 +1,6 @@
-.register-cont {
+import styled from "styled-components";
+
+export const SignInContainer = styled.section`
 	p {
 		margin: 1rem 0;
 	}
@@ -8,8 +10,8 @@
 		justify-content: space-between;
 		align-items: center;
 	}
-	.register-error {
+	.signin-error {
 		color: red;
 		font-weight: 400;
 	}
-}
+`;
