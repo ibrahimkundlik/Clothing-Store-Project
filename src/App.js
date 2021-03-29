@@ -6,6 +6,8 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { setCurrentUser } from "./redux/user/user.action";
 import { selectCurrentUser } from "./redux/user/user.selector";
+// Adding shop data in firestore
+// import { selectShopCollectionsArray } from "./redux/shop/shop.selector";
 import { createStructuredSelector } from "reselect";
 //firebase
 import { auth, createUserProfile } from "./firebase/firebase.utils";
@@ -33,6 +35,12 @@ class App extends React.Component {
 				});
 			}
 			setCurrentUser(userAuth);
+
+			// Adding shop data in firestore
+			// addCollectionAndDocs(
+			// 	"collections",
+			// 	collectionDocs.map(({ title, items }) => ({ title, items }))
+			// );
 		});
 	}
 	//removing OAUTH
@@ -63,6 +71,8 @@ class App extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
 	currentUser: selectCurrentUser,
+	// Adding shop data in firestore
+	// collectionDocs: selectShopCollectionsArray,
 });
 
 const mapDispatchToProps = (dispatch) => ({
