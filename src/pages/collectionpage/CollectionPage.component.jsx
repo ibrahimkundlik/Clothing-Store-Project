@@ -1,5 +1,5 @@
 //react
-import React from "react";
+import React, { useEffect } from "react";
 import Product from "../../components/product/Product.component";
 //redux
 import { connect } from "react-redux";
@@ -9,6 +9,11 @@ import { CollectionPageContainer } from "./CollectionPage.styles";
 
 const CollectionPage = ({ collection }) => {
 	const { title, items } = collection;
+
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
+
 	return (
 		<CollectionPageContainer>
 			<h2>{title.toUpperCase()}</h2>

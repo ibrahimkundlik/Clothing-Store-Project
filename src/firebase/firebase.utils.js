@@ -70,6 +70,8 @@ export const snapshotToMap = (collection) => {
 		};
 	});
 
+	if (updatedCollection.length === 0) return null;
+
 	return updatedCollection.reduce((acc, collection) => {
 		acc[collection.title.toLowerCase()] = collection;
 		return acc;

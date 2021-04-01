@@ -16,3 +16,13 @@ export const selectCollection = (param) => {
 		collections ? collections[param] : null
 	);
 };
+
+export const selectIsFetching = createSelector(
+	[selectShop],
+	(shop) => shop.isFetching
+);
+
+export const selectErrorMessage = createSelector(
+	[selectShop],
+	(shop) => shop.errorMessage
+);

@@ -1,5 +1,5 @@
 //react
-import React from "react";
+import React, { useEffect } from "react";
 import CheckoutItem from "../../components/checkout-item/checkout-item.component";
 //redux
 import { connect } from "react-redux";
@@ -20,6 +20,10 @@ import {
 } from "./Checkout.styles";
 
 const CheckoutPage = ({ cartItems, price }) => {
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
+
 	return (
 		<CheckoutPageContainer>
 			<HeaderContainer>
