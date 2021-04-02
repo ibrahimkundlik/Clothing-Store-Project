@@ -6,11 +6,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { setCurrentUser } from "./redux/user/user.action";
 import { selectCurrentUser } from "./redux/user/user.selector";
-// Adding shop data in firestore
-// import { selectShopCollectionsArray } from "./redux/shop/shop.selector";
 import { createStructuredSelector } from "reselect";
-//firebase
-import { auth, createUserProfile } from "./firebase/firebase.utils";
 //components
 import Header from "./components/header/Header.component";
 import HomePage from "./pages/homepage/HomePage.component";
@@ -23,25 +19,6 @@ class App extends React.Component {
 	//setting OAUTH
 	componentDidMount() {
 		const { setCurrentUser } = this.props;
-		this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-			if (userAuth) {
-				const userRef = await createUserProfile(userAuth);
-
-				userRef.onSnapshot((snapShot) => {
-					setCurrentUser({
-						id: snapShot.id,
-						...snapShot.data(),
-					});
-				});
-			}
-			setCurrentUser(userAuth);
-
-			// Adding shop data in firestore
-			// addCollectionAndDocs(
-			// 	"collections",
-			// 	collectionDocs.map(({ title, items }) => ({ title, items }))
-			// );
-		});
 	}
 	//removing OAUTH
 	componentWillUnmount() {
@@ -71,8 +48,6 @@ class App extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
 	currentUser: selectCurrentUser,
-	// Adding shop data in firestore
-	// collectionDocs: selectShopCollectionsArray,
 });
 
 const mapDispatchToProps = (dispatch) => ({
