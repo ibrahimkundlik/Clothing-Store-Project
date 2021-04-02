@@ -7,20 +7,20 @@ import Spinner from "../../components/spinner/spinner.component";
 import { Route } from "react-router-dom";
 //redux
 import { connect } from "react-redux";
-import { fetchCollectionAsync } from "../../redux/shop/shop.action";
 import {
 	selectIsFetching,
 	selectErrorMessage,
 } from "../../redux/shop/shop.selector";
 import { createStructuredSelector } from "reselect";
+import { fetchCollectionStart } from "../../redux/shop/shop.action";
 //HOC
 const CollectionOverviewLoading = Spinner(CollectionOverview);
 const CollectionPageLoading = Spinner(CollectionPage);
 
-const ShopPage = ({ match, isLoading, errorMessage, fetchCollectionAsync }) => {
+const ShopPage = ({ match, isLoading, errorMessage, fetchCollectionStart }) => {
 	useEffect(() => {
-		fetchCollectionAsync();
-	}, [fetchCollectionAsync]);
+		fetchCollectionStart();
+	}, [fetchCollectionStart]);
 
 	return (
 		<section>
@@ -55,7 +55,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	fetchCollectionAsync: () => dispatch(fetchCollectionAsync()),
+	fetchCollectionStart: () => dispatch(fetchCollectionStart()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShopPage);
