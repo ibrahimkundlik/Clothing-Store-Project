@@ -1,28 +1,23 @@
 import { takeLatest, call, put, all } from "redux-saga/effects";
 import userActionTypes from "./user.types";
-import { SignInSuccess, SignInFailure } from "./user.action";
+import {
+	SignInSuccess,
+	SignInFailure,
+	SignOutSuccess,
+	SignOutFailure,
+} from "./user.action";
 //firebase
 import {
 	auth,
 	googleProvider,
 	createUserProfile,
+	getCurrentUser,
 } from "../../firebase/firebase.utils";
 
-//generator for adding signInWithRedirect - google auth
+//generator for signInWithRedirect - google auth
 export function* googleSignInAsync() {
 	try {
 		yield call([auth, auth.signInWithRedirect], googleProvider);
-	} catch (error) {
-		yield put(SignInFailure(error));
-	}
-}
-
-//generator for watching redirect response of above function - google auth
-export function* watchGetRedirectResult() {
-	try {
-		const { user } = yield call([auth, auth.getRedirectResult]);
-		if (!user) return;
-		yield getSnapshotFromAuth(user);
 	} catch (error) {
 		yield put(SignInFailure(error));
 	}
@@ -38,7 +33,7 @@ export function* emailSignInAsync({ payload: { email, password } }) {
 	}
 }
 
-//common code for converting
+//common code for getting snapshot
 export function* getSnapshotFromAuth(user) {
 	try {
 		const userRef = yield call(createUserProfile, user);
@@ -46,6 +41,27 @@ export function* getSnapshotFromAuth(user) {
 		yield put(SignInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
 	} catch (error) {
 		yield put(SignInFailure(error));
+	}
+}
+
+//generator for checking user session - persistance
+export function* checkUserSessionAsync() {
+	try {
+		const userAuth = yield getCurrentUser();
+		if (!userAuth) return;
+		yield getSnapshotFromAuth(userAuth);
+	} catch (error) {
+		yield put(SignInFailure(error));
+	}
+}
+
+//generator for signing out user
+export function* signOutAsync() {
+	try {
+		yield auth.signOut();
+		yield put(SignOutSuccess());
+	} catch (error) {
+		yield put(SignOutFailure(error));
 	}
 }
 
@@ -57,10 +73,19 @@ export function* onEmailSignInStart() {
 	yield takeLatest(userActionTypes.EP_SIGNIN_START, emailSignInAsync);
 }
 
+export function* onCheckUserSession() {
+	yield takeLatest(userActionTypes.CHECK_USER_SESSION, checkUserSessionAsync);
+}
+
+export function* onUserSignOut() {
+	yield takeLatest(userActionTypes.SIGNOUT_START, signOutAsync);
+}
+
 export function* userSagas() {
 	yield all([
 		call(onGoogleSignInStart),
-		call(watchGetRedirectResult),
 		call(onEmailSignInStart),
+		call(onCheckUserSession),
+		call(onUserSignOut),
 	]);
 }
