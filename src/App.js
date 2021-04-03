@@ -4,7 +4,6 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 //redux
 import { connect } from "react-redux";
-import { setCurrentUser } from "./redux/user/user.action";
 import { selectCurrentUser } from "./redux/user/user.selector";
 import { createStructuredSelector } from "reselect";
 //components
@@ -17,9 +16,7 @@ import CheckoutPage from "./pages/checkoutpage/Checkout.component";
 class App extends React.Component {
 	unsubscribeFromAuth = null;
 	//setting OAUTH
-	componentDidMount() {
-		const { setCurrentUser } = this.props;
-	}
+	componentDidMount() {}
 	//removing OAUTH
 	componentWillUnmount() {
 		this.unsubscribeFromAuth();
@@ -50,8 +47,8 @@ const mapStateToProps = createStructuredSelector({
 	currentUser: selectCurrentUser,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-	setCurrentUser: (user) => dispatch(setCurrentUser(user)),
-});
+// const mapDispatchToProps = (dispatch) => ({
+// 	setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);
