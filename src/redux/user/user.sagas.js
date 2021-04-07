@@ -5,6 +5,8 @@ import {
 	SignInFailure,
 	SignOutSuccess,
 	SignOutFailure,
+	SignUpSuccess,
+	SignUpFailure,
 } from "./user.action";
 //firebase
 import {
@@ -34,9 +36,9 @@ export function* emailSignInAsync({ payload: { email, password } }) {
 }
 
 //common code for getting snapshot
-export function* getSnapshotFromAuth(user) {
+export function* getSnapshotFromAuth(user, additionalData) {
 	try {
-		const userRef = yield call(createUserProfile, user);
+		const userRef = yield call(createUserProfile, user, additionalData);
 		const userSnapshot = yield userRef.get();
 		yield put(SignInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
 	} catch (error) {
@@ -65,20 +67,42 @@ export function* signOutAsync() {
 	}
 }
 
+//generator for signing up new user
+//1. creating new user
+export function* userSignUpAsync({
+	payload: { displayName, email, password, photoURL },
+}) {
+	try {
+		const { user } = yield auth.createUserWithEmailAndPassword(email, password);
+		yield put(
+			SignUpSuccess({ user, additionalData: { displayName, photoURL } })
+		);
+	} catch (error) {
+		yield put(SignUpFailure(error));
+	}
+}
+//2. signing in new user
+export function* userSignUpSuccessAsync({ payload: { user, additionalData } }) {
+	yield getSnapshotFromAuth(user, additionalData);
+}
+
 export function* onGoogleSignInStart() {
 	yield takeLatest(userActionTypes.GOOGLE_SIGNIN_START, googleSignInAsync);
 }
-
 export function* onEmailSignInStart() {
 	yield takeLatest(userActionTypes.EP_SIGNIN_START, emailSignInAsync);
 }
-
 export function* onCheckUserSession() {
 	yield takeLatest(userActionTypes.CHECK_USER_SESSION, checkUserSessionAsync);
 }
-
 export function* onUserSignOut() {
 	yield takeLatest(userActionTypes.SIGNOUT_START, signOutAsync);
+}
+export function* onUserSignUp() {
+	yield takeLatest(userActionTypes.SIGNUP_START, userSignUpAsync);
+}
+export function* onUserSignUpSuccess() {
+	yield takeLatest(userActionTypes.SIGNUP_SUCCESS, userSignUpSuccessAsync);
 }
 
 export function* userSagas() {
@@ -87,5 +111,7 @@ export function* userSagas() {
 		call(onEmailSignInStart),
 		call(onCheckUserSession),
 		call(onUserSignOut),
+		call(onUserSignUp),
+		call(onUserSignUpSuccess),
 	]);
 }

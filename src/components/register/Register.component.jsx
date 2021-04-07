@@ -1,12 +1,13 @@
 //react
 import React from "react";
-//firebase
-import { auth, createUserProfile } from "../../firebase/firebase.utils";
 //components
 import FormInput from "../form-input/FormInput.component";
 import CustomBtn from "../custom-btn/CustomBtn.component";
 //styled-components
 import { RegisterContainer } from "./Register.styles";
+//redux-saga
+import { SignUpStart } from "../../redux/user/user.action";
+import { connect } from "react-redux";
 
 class Register extends React.Component {
 	constructor() {
@@ -24,6 +25,7 @@ class Register extends React.Component {
 	handleSubmit = async (e) => {
 		e.preventDefault();
 
+		const { SignUpStart } = this.props;
 		const { displayName, email, password, confirmPassword } = this.state;
 		const photoURL = `https://ui-avatars.com/api/?background=random&name=${displayName}`;
 
@@ -32,24 +34,7 @@ class Register extends React.Component {
 			return;
 		}
 
-		try {
-			const { user } = await auth.createUserWithEmailAndPassword(
-				email,
-				password
-			);
-			await createUserProfile(user, { displayName, photoURL });
-			this.setState({
-				displayName: "",
-				email: "",
-				password: "",
-				confirmPassword: "",
-				error: false,
-			});
-		} catch (error) {
-			this.setState({
-				error: true,
-			});
-		}
+		SignUpStart({ displayName, email, password, photoURL });
 	};
 
 	handleChange = (e) => {
@@ -107,4 +92,8 @@ class Register extends React.Component {
 	}
 }
 
-export default Register;
+const mapDispatchToProps = (dispatch) => ({
+	SignUpStart: (signUpDetails) => dispatch(SignUpStart(signUpDetails)),
+});
+
+export default connect(null, mapDispatchToProps)(Register);
