@@ -6,13 +6,11 @@ import CustomBtn from "../custom-btn/CustomBtn.component";
 //styled-components
 import { SignInContainer } from "./SignIn.styles";
 //redux
-import { selectErrorState } from "../../redux/user/user.selector";
-import { createStructuredSelector } from "reselect";
 import { connect } from "react-redux";
 //redux-saga
 import { googleSignInStart, epSignInStart } from "../../redux/user/user.action";
 
-const SignIn = ({ googleSignInStart, epSignInStart, signinError }) => {
+const SignIn = ({ googleSignInStart, epSignInStart, checkError }) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -25,13 +23,15 @@ const SignIn = ({ googleSignInStart, epSignInStart, signinError }) => {
 		<SignInContainer>
 			<h2>I already have an account</h2>
 			<p>Sign in with your email and password</p>
+
 			<p className="signin-error">
-				{!signinError
+				{!checkError
 					? null
-					: signinError.code === "auth/network-request-failed"
+					: checkError.code === "auth/network-request-failed"
 					? "We couldn't sign you in. Network Error. ⚠️"
 					: "We couldn't sign you in. Email or Password is incorrect. ⚠️"}
 			</p>
+
 			<form onSubmit={handleSubmit} autoComplete="off">
 				<FormInput
 					type="email"
@@ -58,14 +58,10 @@ const SignIn = ({ googleSignInStart, epSignInStart, signinError }) => {
 	);
 };
 
-const mapStateToProps = createStructuredSelector({
-	signinError: selectErrorState,
-});
-
 const mapDispatchToProps = (dispatch) => ({
 	googleSignInStart: () => dispatch(googleSignInStart()),
 	epSignInStart: (email, password) =>
 		dispatch(epSignInStart({ email, password })),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default connect(null, mapDispatchToProps)(SignIn);

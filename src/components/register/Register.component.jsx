@@ -5,14 +5,11 @@ import FormInput from "../form-input/FormInput.component";
 import CustomBtn from "../custom-btn/CustomBtn.component";
 //styled-components
 import { RegisterContainer } from "./Register.styles";
-//redux
-import { createStructuredSelector } from "reselect";
-import { selectErrorState } from "../../redux/user/user.selector";
 //redux-saga
 import { SignUpStart } from "../../redux/user/user.action";
 import { connect } from "react-redux";
 
-const Register = ({ SignUpStart, SignUpError }) => {
+const Register = ({ SignUpStart, checkError }) => {
 	const [userCreds, setUserCreds] = useState({
 		displayName: "",
 		email: "",
@@ -46,11 +43,11 @@ const Register = ({ SignUpStart, SignUpError }) => {
 			<p>Sign up with your email and password</p>
 
 			<p className="register-error">
-				{!SignUpError
+				{!checkError
 					? null
-					: SignUpError.code === "auth/email-already-in-use"
+					: checkError.code === "auth/email-already-in-use"
 					? "The email address is already in use by another account. ⚠️"
-					: SignUpError.code === "auth/invalid-email"
+					: checkError.code === "auth/invalid-email"
 					? "Please enter a valid email address. ⚠️"
 					: "We couldn't register your account. Network Error. ⚠️"}
 			</p>
@@ -83,7 +80,7 @@ const Register = ({ SignUpStart, SignUpError }) => {
 				{userCreds.passwordError ? (
 					<p style={{ margin: "0 0 1rem 0" }} className="register-error">
 						Password should be at least 6 characters and both passwords should
-						match ⚠️
+						match. ⚠️
 					</p>
 				) : null}
 				<FormInput
@@ -100,12 +97,8 @@ const Register = ({ SignUpStart, SignUpError }) => {
 	);
 };
 
-const mapStateToProps = createStructuredSelector({
-	SignUpError: selectErrorState,
-});
-
 const mapDispatchToProps = (dispatch) => ({
 	SignUpStart: (signUpDetails) => dispatch(SignUpStart(signUpDetails)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default connect(null, mapDispatchToProps)(Register);
