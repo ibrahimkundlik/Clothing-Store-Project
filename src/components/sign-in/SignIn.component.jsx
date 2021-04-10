@@ -15,9 +15,8 @@ import { googleSignInStart, epSignInStart } from "../../redux/user/user.action";
 const SignIn = ({ googleSignInStart, epSignInStart, signinError }) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [error, setError] = useState(false);
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = (e) => {
 		e.preventDefault();
 		epSignInStart(email, password);
 	};
@@ -26,11 +25,13 @@ const SignIn = ({ googleSignInStart, epSignInStart, signinError }) => {
 		<SignInContainer>
 			<h2>I already have an account</h2>
 			<p>Sign in with your email and password</p>
-			{error ? (
-				<p className="signin-error">
-					We couldn't sign you in. Email or Password is incorrect. ⚠️
-				</p>
-			) : null}
+			<p className="signin-error">
+				{!signinError
+					? null
+					: signinError.code === "auth/network-request-failed"
+					? "We couldn't sign you in. Network Error. ⚠️"
+					: "We couldn't sign you in. Email or Password is incorrect. ⚠️"}
+			</p>
 			<form onSubmit={handleSubmit} autoComplete="off">
 				<FormInput
 					type="email"

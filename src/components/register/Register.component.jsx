@@ -1,99 +1,111 @@
 //react
-import React from "react";
+import React, { useState } from "react";
 //components
 import FormInput from "../form-input/FormInput.component";
 import CustomBtn from "../custom-btn/CustomBtn.component";
 //styled-components
 import { RegisterContainer } from "./Register.styles";
+//redux
+import { createStructuredSelector } from "reselect";
+import { selectErrorState } from "../../redux/user/user.selector";
 //redux-saga
 import { SignUpStart } from "../../redux/user/user.action";
 import { connect } from "react-redux";
 
-class Register extends React.Component {
-	constructor() {
-		super();
+const Register = ({ SignUpStart, SignUpError }) => {
+	const [userCreds, setUserCreds] = useState({
+		displayName: "",
+		email: "",
+		password: "",
+		confirmPassword: "",
+		passwordError: false,
+	});
 
-		this.state = {
-			displayName: "",
-			email: "",
-			password: "",
-			confirmPassword: "",
-			error: false,
-		};
-	}
-
-	handleSubmit = async (e) => {
+	const handleSubmit = (e) => {
 		e.preventDefault();
-
-		const { SignUpStart } = this.props;
-		const { displayName, email, password, confirmPassword } = this.state;
-		const photoURL = `https://ui-avatars.com/api/?background=random&name=${displayName}`;
-
-		if (password !== confirmPassword) {
-			alert("Passwords don't match");
+		const { displayName, email, password, confirmPassword } = userCreds;
+		if (password !== confirmPassword || password.length < 6) {
+			setUserCreds({ ...userCreds, passwordError: true });
 			return;
+		} else {
+			setUserCreds({ ...userCreds, passwordError: false });
 		}
+		const photoURL = `https://ui-avatars.com/api/?background=random&name=${displayName}`;
 
 		SignUpStart({ displayName, email, password, photoURL });
 	};
 
-	handleChange = (e) => {
+	const handleChange = (e) => {
 		const { value, name } = e.target;
-		this.setState({ [name]: value });
+		setUserCreds({ ...userCreds, [name]: value });
 	};
 
-	render() {
-		return (
-			<RegisterContainer>
-				<h2>I do not have an account</h2>
-				<p>Sign up with your email and password</p>
-				{this.state.error ? (
-					<p className="register-error">
-						The email address is already in use by another account. ⚠️
+	return (
+		<RegisterContainer>
+			<h2>I do not have an account</h2>
+			<p>Sign up with your email and password</p>
+
+			<p className="register-error">
+				{!SignUpError
+					? null
+					: SignUpError.code === "auth/email-already-in-use"
+					? "The email address is already in use by another account. ⚠️"
+					: SignUpError.code === "auth/invalid-email"
+					? "Please enter a valid email address. ⚠️"
+					: "We couldn't register your account. Network Error. ⚠️"}
+			</p>
+
+			<form onSubmit={handleSubmit} autoComplete="off">
+				<FormInput
+					type="text"
+					name="displayName"
+					label="Display Name"
+					id="display-name"
+					onChange={handleChange}
+					required
+				/>
+				<FormInput
+					type="email"
+					name="email"
+					label="Email"
+					id="sign-up-email"
+					onChange={handleChange}
+					required
+				/>
+				<FormInput
+					type="password"
+					name="password"
+					label="Password"
+					id="sign-up-password"
+					onChange={handleChange}
+					required
+				/>
+				{userCreds.passwordError ? (
+					<p style={{ margin: "0 0 1rem 0" }} className="register-error">
+						Password should be at least 6 characters and both passwords should
+						match ⚠️
 					</p>
 				) : null}
-				<form onSubmit={this.handleSubmit} autoComplete="off">
-					<FormInput
-						type="text"
-						name="displayName"
-						label="Display Name"
-						id="display-name"
-						onChange={this.handleChange}
-						required
-					/>
-					<FormInput
-						type="email"
-						name="email"
-						label="Email"
-						id="sign-up-email"
-						onChange={this.handleChange}
-						required
-					/>
-					<FormInput
-						type="password"
-						name="password"
-						label="Password"
-						id="sign-up-password"
-						onChange={this.handleChange}
-						required
-					/>
-					<FormInput
-						type="password"
-						name="confirmPassword"
-						label="Confirm Password"
-						id="confirm-password"
-						onChange={this.handleChange}
-						required
-					/>
-					<CustomBtn type="submit"> SIGN UP </CustomBtn>
-				</form>
-			</RegisterContainer>
-		);
-	}
-}
+				<FormInput
+					type="password"
+					name="confirmPassword"
+					label="Confirm Password"
+					id="confirm-password"
+					onChange={handleChange}
+					required
+				/>
+				<CustomBtn type="submit"> SIGN UP </CustomBtn>
+			</form>
+		</RegisterContainer>
+	);
+};
+
+const mapStateToProps = createStructuredSelector({
+	SignUpError: selectErrorState,
+});
 
 const mapDispatchToProps = (dispatch) => ({
 	SignUpStart: (signUpDetails) => dispatch(SignUpStart(signUpDetails)),
 });
 
-export default connect(null, mapDispatchToProps)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
