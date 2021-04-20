@@ -16,7 +16,7 @@ export const ProductContainer = styled.section`
 		left: 50%;
 		transform: translate(-50%, -50%);
 		color: white;
-		display: none;
+		display: block;
 
 		&:hover {
 			background-color: #ceffdf;
@@ -24,19 +24,21 @@ export const ProductContainer = styled.section`
 		}
 	}
 
-	&:hover,
-	&:focus {
-		div:nth-child(1) {
-			opacity: 0.7;
-		}
-
-		button {
-			display: block;
-		}
-	}
-
 	${media.tablet`
     width: 23%;
+		button {
+			display: none;
+		}
+		&:hover,
+		&:focus {
+			div:nth-child(1) {
+				opacity: 0.7;
+			}
+
+			button {
+				display: block;
+			}
+		}
   `}
 
 	@media screen and (min-width: 1200px) {
