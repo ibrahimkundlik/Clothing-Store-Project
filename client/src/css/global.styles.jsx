@@ -1,3 +1,6 @@
+import { createGlobalStyle } from "styled-components";
+
+export const GlobalStyles = createGlobalStyle`
 * {
 	padding: 0;
 	margin: 0;
@@ -63,3 +66,4 @@ button {
 		padding: 0rem 2.5rem 3rem 2.5rem;
 	}
 }
+`;

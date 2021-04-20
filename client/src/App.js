@@ -13,6 +13,7 @@ import HomePage from "./pages/homepage/HomePage.component";
 import ShopPage from "./pages/shoppage/ShopPage.component";
 import LoginPage from "./pages/loginpage/LoginPage.component";
 import CheckoutPage from "./pages/checkoutpage/Checkout.component";
+import { GlobalStyles } from "./css/global.styles";
 
 const App = ({ checkUserSession, currentUser }) => {
 	useEffect(() => {
@@ -21,6 +22,7 @@ const App = ({ checkUserSession, currentUser }) => {
 
 	return (
 		<div className="app-container">
+			<GlobalStyles />
 			<Header />
 			<Switch>
 				<Route exact path="/" component={HomePage} />
