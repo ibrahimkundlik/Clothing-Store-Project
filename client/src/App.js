@@ -10,6 +10,7 @@ import { createStructuredSelector } from "reselect";
 //components
 import Header from "./components/header/Header.component";
 import Spinner from "./components/spinner/spinner.component";
+import ErrorBoundary from "./components/error-bd/error-bd.component";
 import { GlobalStyles } from "./css/global.styles";
 //lazy loading
 const HomePage = lazy(() => import("./pages/homepage/HomePage.component"));
@@ -29,16 +30,18 @@ const App = ({ checkUserSession, currentUser }) => {
 			<GlobalStyles />
 			<Header />
 			<Switch>
-				<Suspense fallback={<Spinner />}>
-					<Route exact path="/" component={HomePage} />
-					<Route path="/shop" component={ShopPage} />
-					<Route exact path="/checkout" component={CheckoutPage} />
-					<Route
-						exact
-						path="/login"
-						render={() => (currentUser ? <Redirect to="/" /> : <LoginPage />)}
-					/>
-				</Suspense>
+				<ErrorBoundary>
+					<Suspense fallback={<Spinner />}>
+						<Route exact path="/" component={HomePage} />
+						<Route path="/shop" component={ShopPage} />
+						<Route exact path="/checkout" component={CheckoutPage} />
+						<Route
+							exact
+							path="/login"
+							render={() => (currentUser ? <Redirect to="/" /> : <LoginPage />)}
+						/>
+					</Suspense>
+				</ErrorBoundary>
 			</Switch>
 		</div>
 	);
