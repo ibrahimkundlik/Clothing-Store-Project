@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import CollectionOverview from "../../components/collection-overview/collection-overview.component";
 import CollectionPage from "../collectionpage/CollectionPage.component";
-import Spinner from "../../components/spinner/spinner.component";
+import Spinner from "../../components/with-spinner/spinner.component";
 //react-router
 import { Route } from "react-router-dom";
 //redux
