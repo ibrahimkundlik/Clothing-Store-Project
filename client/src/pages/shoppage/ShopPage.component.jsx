@@ -1,8 +1,7 @@
 //react
-import React, { useEffect } from "react";
-import CollectionOverview from "../../components/collection-overview/collection-overview.component";
-import CollectionPage from "../collectionpage/CollectionPage.component";
-import Spinner from "../../components/with-spinner/spinner.component";
+import React, { lazy, Suspense, useEffect } from "react";
+import Spinner from "../../components/spinner/spinner.component";
+import WithSpinner from "../../components/with-spinner/with-spinner.component";
 //react-router
 import { Route } from "react-router-dom";
 //redux
@@ -13,9 +12,15 @@ import {
 } from "../../redux/shop/shop.selector";
 import { createStructuredSelector } from "reselect";
 import { fetchCollectionStart } from "../../redux/shop/shop.action";
-//HOC
-const CollectionOverviewLoading = Spinner(CollectionOverview);
-const CollectionPageLoading = Spinner(CollectionPage);
+//HOC + lazy-loading
+const CollectionOverviewLoading = WithSpinner(
+	lazy(() =>
+		import("../../components/collection-overview/collection-overview.component")
+	)
+);
+const CollectionPageLoading = WithSpinner(
+	lazy(() => import("../collectionpage/CollectionPage.component"))
+);
 
 const ShopPage = ({ match, isLoading, errorMessage, fetchCollectionStart }) => {
 	useEffect(() => {
@@ -24,27 +29,29 @@ const ShopPage = ({ match, isLoading, errorMessage, fetchCollectionStart }) => {
 
 	return (
 		<section>
-			<Route
-				exact
-				path={`${match.path}`}
-				render={(props) => (
-					<CollectionOverviewLoading
-						isLoading={isLoading}
-						errorMessage={errorMessage}
-						{...props}
-					/>
-				)}
-			/>
-			<Route
-				path={`${match.path}/:collectionId`}
-				render={(props) => (
-					<CollectionPageLoading
-						isLoading={isLoading}
-						errorMessage={errorMessage}
-						{...props}
-					/>
-				)}
-			/>
+			<Suspense fallback={<Spinner />}>
+				<Route
+					exact
+					path={`${match.path}`}
+					render={(props) => (
+						<CollectionOverviewLoading
+							isLoading={isLoading}
+							errorMessage={errorMessage}
+							{...props}
+						/>
+					)}
+				/>
+				<Route
+					path={`${match.path}/:collectionId`}
+					render={(props) => (
+						<CollectionPageLoading
+							isLoading={isLoading}
+							errorMessage={errorMessage}
+							{...props}
+						/>
+					)}
+				/>
+			</Suspense>
 		</section>
 	);
 };

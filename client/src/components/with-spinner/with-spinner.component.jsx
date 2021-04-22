@@ -1,15 +1,13 @@
 import React from "react";
-import { SpinnerContainer } from "./spinner.styles";
+import Spinner from "../spinner/spinner.component";
 
-const Spinner = (WrappedComponent) => ({
+const WithSpinner = (WrappedComponent) => ({
 	isLoading,
 	errorMessage,
 	...otherProps
 }) => {
 	return isLoading ? (
-		<div style={{ textAlign: "center", width: "100%" }}>
-			<SpinnerContainer />
-		</div>
+		<Spinner />
 	) : errorMessage ? (
 		<h2 style={{ textAlign: "center", fontSize: "1rem" }}>{errorMessage}</h2>
 	) : (
@@ -17,4 +15,4 @@ const Spinner = (WrappedComponent) => ({
 	);
 };
 
-export default Spinner;
+export default WithSpinner;
