@@ -66,7 +66,7 @@ export const StripeMssgContainer = styled.div`
 	width: 100%;
 	padding: 1rem 0;
 	text-align: right;
-	color: red;
+	color: #e12828;
 
 	p {
 		font-weight: 400;
