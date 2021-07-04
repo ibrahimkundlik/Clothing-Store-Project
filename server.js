@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const compression = require("compression");
 const enforce = require("express-sslify");
+const wakeUpDyno = require("./dyno.js");
 
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
 
@@ -24,9 +25,12 @@ if (process.env.NODE_ENV === "production") {
 	});
 }
 
+const APP_URL = "https://crwn-clothing-live-ik.herokuapp.com/";
+
 app.listen(port, (error) => {
 	if (error) throw error;
 	console.log("Server running on port " + port);
+	wakeUpDyno(APP_URL);
 });
 
 app.get("/service-worker.js", (req, res) => {

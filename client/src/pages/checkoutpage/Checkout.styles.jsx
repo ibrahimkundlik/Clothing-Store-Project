@@ -79,6 +79,10 @@ export const StripeMssgContainer = styled.div`
 
 	button {
 		margin-top: 1rem;
-		width: 50%;
+		width: 150px;
+	}
+
+	.check-user-cart {
+		color: black;
 	}
 `;

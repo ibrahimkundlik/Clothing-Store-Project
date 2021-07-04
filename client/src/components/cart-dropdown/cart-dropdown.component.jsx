@@ -1,5 +1,5 @@
 //react
-import React from "react";
+import React, { useRef } from "react";
 import CustomBtn from "../custom-btn/CustomBtn.component";
 import CartItem from "../cart-item/cart-item.component";
 //styled-components
@@ -11,10 +11,15 @@ import { connect } from "react-redux";
 import { selectCartItems } from "../../redux/cart/cart.selector";
 import { setCartToggle } from "../../redux/cart/cart.action";
 import { createStructuredSelector } from "reselect";
+import { useClickOutside } from "./useClickOutside.js";
 
 const CartDropdown = ({ cartItems, history, dispatch }) => {
+	const ref = useRef();
+
+	useClickOutside(ref, () => dispatch(setCartToggle()));
+
 	return (
-		<CartDropdownContainer>
+		<CartDropdownContainer ref={ref}>
 			<CartItems>
 				{cartItems.length === 0 ? (
 					<p className="empty-cart">Cart is empty !</p>

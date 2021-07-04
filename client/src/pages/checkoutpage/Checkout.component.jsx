@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import CheckoutItem from "../../components/checkout-item/checkout-item.component";
 //redux
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import {
 	selectCartItems,
@@ -18,8 +18,11 @@ import {
 	TotalContainer,
 	StripeMssgContainer,
 } from "./Checkout.styles";
+import { selectCurrentUser } from "../../redux/user/user.selector";
 
 const CheckoutPage = ({ cartItems, price }) => {
+	const currentUser = useSelector(selectCurrentUser);
+
 	useEffect(() => {
 		window.scrollTo(0, 0);
 	}, []);
@@ -52,7 +55,13 @@ const CheckoutPage = ({ cartItems, price }) => {
 				<p>
 					CVC: <span>Any 3 digits</span>
 				</p>
-				<StripeCheckoutButton price={price} />
+				{price > 0 && currentUser ? (
+					<StripeCheckoutButton price={price} />
+				) : (
+					<p className="check-user-cart">
+						Kindly LOGIN for payment option and add some items to cart.
+					</p>
+				)}
 			</StripeMssgContainer>
 		</CheckoutPageContainer>
 	);
